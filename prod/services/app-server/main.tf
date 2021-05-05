@@ -9,7 +9,7 @@ resource "aws_key_pair" "prodapp" {
 }
 
 resource "aws_security_group" "prodapp" {
-  name        = "ubuntu-security-group"
+  name        = "prod-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
 
   ingress {
@@ -50,7 +50,7 @@ resource "aws_security_group" "prodapp" {
 
 
 resource "aws_instance" "prodapp" {
-  key_name      = aws_key_pair.ubuntu.key_name
+  key_name      = aws_key_pair.prodapp.key_name
   ami           = "ami-08f11f4114f566d1a"
   instance_type = "t2.micro"
 
@@ -59,7 +59,7 @@ resource "aws_instance" "prodapp" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.ubuntu.id
+    aws_security_group.prodapp.id
   ]
 
   connection {

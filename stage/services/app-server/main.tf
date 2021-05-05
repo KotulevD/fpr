@@ -9,7 +9,7 @@ resource "aws_key_pair" "devapp" {
 }
 
 resource "aws_security_group" "devapp" {
-  name        = "ubuntu-security-group"
+  name        = "devapp-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
 
   ingress {
@@ -44,13 +44,13 @@ resource "aws_security_group" "devapp" {
   }
 
   tags = {
-    Name = "terraform"
+    Name = "devapp"
   }
 }
 
 
 resource "aws_instance" "devapp" {
-  key_name      = aws_key_pair.ubuntu.key_name
+  key_name      = aws_key_pair.devapp.key_name
   ami           = "ami-08f11f4114f566d1a"
   instance_type = "t2.micro"
 
@@ -59,7 +59,7 @@ resource "aws_instance" "devapp" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.ubuntu.id
+    aws_security_group.devapp.id
   ]
 
   connection {
@@ -81,10 +81,11 @@ resource "aws_eip" "devapp" {
   instance = aws_instance.devapp.id
 }
 
+
 terraform {
   backend "s3" {
     bucket         = "my-tfstate-store11223344"
-    key            = "global/stage/webserver-cluster/terraform.tfstate"
+    key            = "global/stage/services/app-server/terraform.tfstate"
     region         = "eu-central-1"
     dynamodb_table = "terraform-backend-state-locks11223344"
     encrypt        = true
