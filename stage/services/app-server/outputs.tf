@@ -4,6 +4,7 @@
 #}
 
 output "public_ip" {
-	value = aws_instance.devapp.public_ip
-	description = "The public IP address of theweb server"
+        value = aws_eip.devapp.public_ip
+        description = "The public IP address of devapp server"
 }
+
