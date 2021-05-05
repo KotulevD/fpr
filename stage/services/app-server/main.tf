@@ -51,7 +51,7 @@ resource "aws_security_group" "devapp" {
 
 resource "aws_instance" "devapp" {
   key_name      = aws_key_pair.devapp.key_name
-  ami           = "ami-08f11f4114f566d1a"
+  ami           = "ami-05f7491af5eef733a"
   instance_type = "t2.micro"
 
   tags = {
